@@ -1,45 +1,35 @@
 "use client";
+import NumberThala from "@/components/NumberThala";
+import TextThala from "@/components/TextThala";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import Image from "next/image";
 import { useState } from "react";
 
 export default function Home() {
-  const [text, setText] = useState("");
-  const [isThala, setIsThala] = useState<"THALA" | "NOT_THALA" | "NONE">("NONE");
-  const [isInputDisabled, setIsInputDisabled] = useState(false)
-  const checkForThala = () => {
-    setIsInputDisabled(true)
-    const val = text.replace(" ", "").length;
-    if (val === 7) {
-      setIsThala("THALA");
-    } else {
-      setIsThala("NOT_THALA");
-    }
-    setTimeout(() => {
-      console.log("world");
-      setIsThala("NONE");
-      setIsInputDisabled(false)
-    }, 3000);
-  };
   return (
     <div className=" text-center pt-32 flex flex-col items-center justify-center">
-      <h2 className="text-3xl">Thala for a reason</h2>
-      <div className="flex items-center gap-2 mt-8">
-        <Input
-          placeholder="Enter Text"
-          value={text}
-          onChange={(e) => {
-            setText(e.target.value);
-          }}
-          disabled={isInputDisabled}
-        />
-        <Button onClick={checkForThala}>Check For Thala</Button>
-      </div>
-
-      {isThala === "THALA" ? <h3 className="mt-4">Wohooooooooooo,{text} IS THALA FOR A REASON!!</h3> : null}
-
-      {isThala === "NOT_THALA" ? <h3 className="mt-4">{text} NOT THALA :(</h3> : null}
+      <Tabs defaultValue="account" className="w-[400px]">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="thala_number">THALA NUMBER</TabsTrigger>
+          <TabsTrigger value="thala_text">THALA TEXT</TabsTrigger>
+        </TabsList>
+        <TabsContent value="thala_number">
+          <NumberThala />
+        </TabsContent>
+        <TabsContent value="thala_text">
+          <TextThala />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
